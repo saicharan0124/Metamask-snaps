@@ -1,41 +1,59 @@
 import { OnRpcRequestHandler } from '@metamask/snap-types';
+// import { OnCronjobHandler } from '@metamask/snap-types';
+import { myFunction, getMessage } from './fetch';
 
-/**
- * Get a message from the origin. For demonstration purposes only.
- *
- * @param originString - The origin string.
- * @returns A message based on the origin.
- */
-export const getMessage = (originString: string): string =>
-  `Hello, ${originString}!`;
+export const onRpcRequest: OnRpcRequestHandler = async({  request }) => {
 
-/**
- * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
- *
- * @param args - The request handler args as object.
- * @param args.origin - The origin of the request, e.g., the website that
- * invoked the snap.
- * @param args.request - A validated JSON-RPC request object.
- * @returns `null` if the request succeeded.
- * @throws If the request method is not valid for this snap.
- * @throws If the `snap_confirm` call failed.
- */
-export const onRpcRequest: OnRpcRequestHandler = ({ origin, request }) => {
+//console.log("boi")
+  // console.log(result);
+
   switch (request.method) {
-    case 'hello':
+    case 'inApp':
+     
       return wallet.request({
-        method: 'snap_confirm',
+        method: 'snap_notify',
         params: [
           {
-            prompt: getMessage(origin),
-            description:
-              'This custom confirmation is just for display purposes.',
-            textAreaContent:
-              'But you can edit the snap source code to make it do something, if you want to!',
+            type: 'inApp',
+            message:await myFunction(),
+           
           },
         ],
       });
+      case 'native':
+        return wallet.request({
+          method: 'snap_notify',
+          params: [
+            {
+              type: 'native',
+              message: `Hello`,
+            },
+          ],
+        });
     default:
       throw new Error('Method not found.');
   }
 };
+
+
+
+
+
+
+// export const onCronjob: OnCronjobHandler = async ({ request }) => {
+//   switch (request.method) {
+//     case 'exampleMethodOne':
+//       return wallet.request({
+//         method: 'snap_notify',
+//         params: [
+//           {
+//             type: 'inApp',
+//             message: `Hello, world!`,
+//           },
+//         ],
+//       });
+
+//     default:
+//       throw new Error('Method not found.');
+//   }
+// };

@@ -1,6 +1,7 @@
 import { defaultSnapOrigin } from '../config';
 import { GetSnapsResponse, Snap } from '../types';
 
+
 /**
  * Get the installed snaps in MetaMask.
  *
@@ -19,9 +20,11 @@ export const getSnaps = async (): Promise<GetSnapsResponse> => {
  * @param params - The params to pass with the snap to connect.
  */
 export const connectSnap = async (
+ 
   snapId: string = defaultSnapOrigin,
   params: Record<'version' | string, unknown> = {},
 ) => {
+  console.log("connect snap ")
   await window.ethereum.request({
     method: 'wallet_enable',
     params: [
@@ -59,17 +62,27 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
 /**
  * Invoke the "hello" method from the example snap.
  */
-
 export const sendHello = async () => {
+  console.log("hlo")
   await window.ethereum.request({
     method: 'wallet_invokeSnap',
     params: [
       defaultSnapOrigin,
       {
-        method: 'hello',
+        method: 'inApp',
       },
     ],
   });
 };
+
+
+
+
+
+
+
+
+
+
 
 export const isLocalSnap = (snapId: string) => snapId.startsWith('local:');

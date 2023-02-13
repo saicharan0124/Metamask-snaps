@@ -7,6 +7,7 @@ import {
   sendHello,
   shouldDisplayReconnectButton,
 } from '../utils';
+
 import {
   ConnectButton,
   InstallFlaskButton,
@@ -104,6 +105,7 @@ const Index = () => {
 
   const handleConnectClick = async () => {
     try {
+     
       await connectSnap();
       const installedSnap = await getSnap();
 
