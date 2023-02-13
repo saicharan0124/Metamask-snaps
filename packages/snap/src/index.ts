@@ -26,7 +26,7 @@ export const onRpcRequest: OnRpcRequestHandler = async({  request }) => {
           params: [
             {
               type: 'native',
-              message: `Hello`,
+              message: await myFunction(),
             },
           ],
         });
