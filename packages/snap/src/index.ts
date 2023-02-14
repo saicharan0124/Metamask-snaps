@@ -1,22 +1,46 @@
 import { OnRpcRequestHandler } from '@metamask/snap-types';
-// import { OnCronjobHandler } from '@metamask/snap-types';
+import { OnCronjobHandler } from '@metamask/snaps-types';
 import { myFunction, getMessage } from './fetch';
 
-export const onRpcRequest: OnRpcRequestHandler = async({  request }) => {
+// export const onRpcRequest: OnRpcRequestHandler = async({  request }) => {
+//   switch (request.method) {
+//     case 'inApp':
+     
+//       return wallet.request({
+//         method: 'snap_notify',
+//         params: [
+//           {
+//             type: 'inApp',
+//             message:await myFunction(),
+           
+//           },
+//         ],
+//       });
+//       case 'native':
+//         return wallet.request({
+//           method: 'snap_notify',
+//           params: [
+//             {
+//               type: 'native',
+//               message: `Hello`,
+//             },
+//           ],
+//         });
+//     default:
+//       throw new Error('Method not found.');
+//   }
+// };
 
-//console.log("boi")
-  // console.log(result);
-
+//cron-job
+export const onCronjob: OnCronjobHandler = async ({ request }) => {
   switch (request.method) {
     case 'inApp':
-     
       return wallet.request({
         method: 'snap_notify',
         params: [
           {
             type: 'inApp',
-            message:await myFunction(),
-           
+            message: await myFunction(),
           },
         ],
       });
@@ -26,7 +50,7 @@ export const onRpcRequest: OnRpcRequestHandler = async({  request }) => {
           params: [
             {
               type: 'native',
-              message: await myFunction(),
+              message: `Hello`,
             },
           ],
         });
@@ -38,22 +62,3 @@ export const onRpcRequest: OnRpcRequestHandler = async({  request }) => {
 
 
 
-
-
-// export const onCronjob: OnCronjobHandler = async ({ request }) => {
-//   switch (request.method) {
-//     case 'exampleMethodOne':
-//       return wallet.request({
-//         method: 'snap_notify',
-//         params: [
-//           {
-//             type: 'inApp',
-//             message: `Hello, world!`,
-//           },
-//         ],
-//       });
-
-//     default:
-//       throw new Error('Method not found.');
-//   }
-// };
